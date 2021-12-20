@@ -1,0 +1,74 @@
+.captec-blue {
+    background-color: #2e83ae;
+    min-height: 50px;
+}
+
+.bg-nav{
+    background-color: rgba(221, 221, 221, 0.39);
+}
+
+.form-container {
+    width: 450px;
+    padding: 2%;
+    background-color: #2e83ae;
+    position: relative;
+    font-family: "Roboto", sans-serif;
+    top: -90px;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.btn-login {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    background: #ffcf1f;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    margin-top: 15px;
+    color: #222222;
+    font-size: 14px;
+    font-weight: 400;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+
+.test{
+    min-height: 85vh;
+}
+
+.form-group input {
+    font-family: "Roboto", sans-serif;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin-top: 15px;
+    box-sizing: border-box;
+    border-radius: 0px;
+    font-size: 14px;
+}
+
+.form-group select {
+    font-family: "Roboto", sans-serif;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin-top: 15px;
+    box-sizing: border-box;
+    border-radius: 0px;
+    font-size: 14px;
+    padding: 7px;
+    color: #6c757d;
+}   
+
+
+.login-text{
+    color: #f2f2f2;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.btn-login:hover,.form button:active,.form button:focus {
+    background: #ffd748;
+}
