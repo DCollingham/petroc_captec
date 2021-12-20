@@ -6,6 +6,7 @@ require_once 'includes\config.inc.php';
 require_once 'includes\functions.inc.php';
 privilegeLevel("Admin");
 include_once 'header.php';
+
 if (isset($_POST["search_user_email"])) {
     $userData = readUser($conn, $_POST["search_user_email"]);
 }
@@ -33,7 +34,7 @@ if (isset($_POST["search_user_email"])) {
                 <input type="text" name="search_user_email" value = "<?php echo $search ?>" class="form-control" id="search_user_email" aria-describedby="emailHelp" placeholder="Search user email">
             </div>
             <?php
-            if ($userData) {
+            if ($userData??=false) {
             ?>
                 <div class="form-group my-1 ">
                     <input type="text" name="user_id_read" class="form-control" id="user_id_read" value='<?php echo intval($userData['id']) ?>' disabled aria-describedby="emailHelp" placeholder="User ID">
