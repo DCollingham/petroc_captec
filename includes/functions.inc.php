@@ -123,12 +123,17 @@ function createUser($conn, $user_email, $pwd, $pwdRepeat, $department)
 }
 
 function readUser($conn, $user_email){
-    $sql = "SELECT * FROM users WHERE email=?";
+    $sql = "SELECT * FROM users WHERE email=? LIMIT 1";
     $stmt = $conn->prepare($sql); 
     $stmt->bind_param("s", $user_email);
     $stmt->execute();
     $result = $stmt->get_result(); // get the mysqli result
-    $user = $result->fetch_assoc(); // fetch data  
+    $numRows = $result->num_rows;
+    if($numRows){
+        $user = $result->fetch_assoc(); // fetch data  
+    }else{
+        $user = false;
+    }
     return $user;
 }
 
