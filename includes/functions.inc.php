@@ -100,6 +100,37 @@ function userExists($conn, $user_email)
     my_sqli_stmt_close($stmt);
 }
 
+function getInstruction($conn, $part_number, $instruction_type)
+{
+    $result;
+    $sql = "SELECT * FROM instruction WHERE part_number = ? AND instruction_type = ?  ;";
+    //Prepared statement to prevent sql injection
+    $stmt = mysqli_stmt_init($conn);
+    //Checks if sql statement executes & redirects to current page
+    if (!mysqli_stmt_prepare($stmt, $sql))
+    {
+        header('Location: '.$_SERVER['PHP_SELF']);;
+        exit();
+    }
+    //Binds statement with user email
+    mysqli_stmt_bind_param($stmt, "ss", $part_number, $instruction_type);
+    mysqli_stmt_execute($stmt);
+
+    //Assigns result to variable
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if ($row = mysqli_fetch_assoc($resultData))
+    {
+        return $row;
+    }
+    else
+    {
+        $result = false;
+        return $result;
+    }
+    my_sqli_stmt_close($stmt);
+}
+
 function createUser($conn, $user_email, $pwd, $pwdRepeat, $department)
 {
     $sql = "INSERT INTO users (email, password, department) VALUES (?, ? ,?) ;";
@@ -122,13 +153,20 @@ function createUser($conn, $user_email, $pwd, $pwdRepeat, $department)
     exit();
 }
 
+
+
 function readUser($conn, $user_email){
-    $sql = "SELECT * FROM users WHERE email=?";
+    $sql = "SELECT * FROM users WHERE email=? LIMIT 1";
     $stmt = $conn->prepare($sql); 
     $stmt->bind_param("s", $user_email);
     $stmt->execute();
     $result = $stmt->get_result(); // get the mysqli result
-    $user = $result->fetch_assoc(); // fetch data  
+    $numRows = $result->num_rows;
+    if($numRows){
+        $user = $result->fetch_assoc(); // fetch data  
+    }else{
+        $user = false;
+    }
     return $user;
 }
 
@@ -199,27 +237,31 @@ function loginUser($conn, $user_email, $pwd){
 }
 
 function privilegeLevel($Department) {
-    if (isset($_SESSION['userid'])){
-        if ($_SESSION['department'] != "$Department"){
+    if (!isset($_SESSION['userid'])){
+        header("location: access_denied.php");
+            exit();
+    }
+    if ($_SESSION['department'] != "$Department"){
             header("location: access_denied.php");
             exit();
             }           
-        }
     }
 
 function drawNav(){
     if (isset($_SESSION['userid'])){
-        if ($_SESSION['department'] == "Admin"){
+        if ($_SESSION['department'] == "Engineering"){
         echo 
-            '<a class="nav-item nav-link" href="#">View</a>
+            '<a class="nav-item nav-link" href="#">Requests</a>
+            <a class="nav-item nav-link" href="instructions.php">Instructions</a>
              <a class="nav-item nav-link" href="add_user.php">Add User</a>
              <a class="nav-item nav-link" href="modify_user.php">Delete User</a>
              <a class="nav-item nav-link" href="includes/logout.inc.php">Logout</a>';
         } 
-        if ($_SESSION['department'] == "Engineering"){
+        if ($_SESSION['department'] == "Production"){
             echo 
-                '<a class="nav-item nav-link" href="#">View</a>
-                 <a class="nav-item nav-link" href="welcome.php">Engineering</a>
+                '<a class="nav-item nav-link" href="instructions.php">View Instructions</a>
+                 <a class="nav-item nav-link" href="#">Request Update</a>
+                 <a class="nav-item nav-link" href="#">New Instruction</a>
                  <a class="nav-item nav-link" href="includes/logout.inc.php">Logout</a>';
             } 
     }
