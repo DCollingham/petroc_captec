@@ -103,7 +103,7 @@ function userExists($conn, $user_email)
 function getInstruction($conn, $part_number, $instruction_type)
 {
     $result;
-    $sql = "SELECT * FROM instruction WHERE part_number = ? AND instruction_type = ?  ;";
+    $sql = "SELECT * FROM instruction WHERE part_number = ? AND instruction_type = ?;";
     //Prepared statement to prevent sql injection
     $stmt = mysqli_stmt_init($conn);
     //Checks if sql statement executes & redirects to current page

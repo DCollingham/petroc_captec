@@ -1,7 +1,7 @@
 <?php
 include_once 'header.php';
 require_once 'includes\functions.inc.php';
-privilegeLevel("Admin");
+privilegeLevel("Engineering");
 ?>
   <div class="container d-flex justify-content-center align-items-center test">
 
